@@ -1,0 +1,91 @@
+.hero {
+  text-align: center;
+  background-image: url('../../assests/image1.png');
+  background-size: cover;
+  background-position: center;
+  color: black;
+  padding: 2rem 1rem;
+  height: 399px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 1rem;
+  color: white;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-search {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+.hero-search .form-control {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  min-width: 200px;
+  background: white;
+  cursor: pointer;
+}
+
+.hero-search .form-control:focus {
+  outline: none;
+  border-color: #6200ea;
+  box-shadow: 0 0 0 2px rgba(98, 0, 234, 0.2);
+}
+
+.btn-search {
+  background-color: #6200ea;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  padding: 0.5rem 2rem;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.btn-search:hover {
+  background-color: #3700b3;
+}
+
+/* Responsive Design */
+@media (max-width: 1320px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+  
+  .hero-search {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .hero-search .form-control,
+  .btn-search {
+    width: 100%;
+    max-width: 300px;
+  }
+}
