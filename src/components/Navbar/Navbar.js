@@ -65,10 +65,10 @@ const Navbar = () => {
                 <a className="nav-link px-3 active" href="/events">Events</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link px-3" href="/discover">Discover</a>
+                <a className="nav-link px-3 active" href="/discover">Discover</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link px-3" href="/community">Community</a>
+                <a className="nav-link px-3 active" href="/community">Community</a>
               </li>
             </ul>
 

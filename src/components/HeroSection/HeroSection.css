@@ -1,91 +1,71 @@
 .hero {
-  text-align: center;
-  background-image: url('../../assests/image1.png');
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+              url('https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=1500&q=80');
   background-size: cover;
   background-position: center;
-  color: black;
-  padding: 2rem 1rem;
-  height: 399px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
+  padding: 80px 20px;
+  color: white;
+  text-align: center;
 }
 
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1;
+.hero-content {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .hero h1 {
   font-size: 2.5rem;
   margin-bottom: 1rem;
   color: white;
-  position: relative;
-  z-index: 2;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  margin-bottom: 2rem;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .hero-search {
-  margin-top: 1rem;
   display: flex;
-  justify-content: center;
   gap: 1rem;
-  position: relative;
-  z-index: 2;
+  max-width: 900px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2rem;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
 }
 
-.hero-search .form-control {
-  padding: 0.5rem;
-  font-size: 1rem;
-  border: 1px solid #ddd;
+.form-control {
+  flex: 1;
+  padding: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 5px;
-  min-width: 200px;
-  background: white;
-  cursor: pointer;
-}
-
-.hero-search .form-control:focus {
-  outline: none;
-  border-color: #6200ea;
-  box-shadow: 0 0 0 2px rgba(98, 0, 234, 0.2);
+  background: rgba(255, 255, 255, 0.9);
+  color: #333;
 }
 
 .btn-search {
-  background-color: #6200ea;
+  padding: 0.75rem 2rem;
+  background: #007bff;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  padding: 0.5rem 2rem;
-  font-size: 1rem;
-  transition: background-color 0.3s ease;
+  transition: background 0.3s ease;
 }
 
 .btn-search:hover {
-  background-color: #3700b3;
+  background: #0056b3;
 }
 
-/* Responsive Design */
-@media (max-width: 1320px) {
-  .hero h1 {
-    font-size: 2rem;
-  }
-  
+@media (max-width: 768px) {
   .hero-search {
     flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
   }
-
-  .hero-search .form-control,
+  
+  .form-control,
   .btn-search {
     width: 100%;
-    max-width: 300px;
   }
 }

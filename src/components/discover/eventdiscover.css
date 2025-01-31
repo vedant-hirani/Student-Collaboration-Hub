@@ -1,0 +1,40 @@
+.discover-container {
+    background-color: #f8f9fa;
+    min-height: calc(100vh - 70px);
+  }
+  
+  .category-card {
+    background-color: #fff;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    border: 1px solid #e9ecef;
+  }
+  
+  .category-card:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-2px);
+  }
+  
+  .trending-item {
+    background-color: #fff;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+  }
+  
+  .trending-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+  }
+  
+  .tags .badge {
+    font-weight: normal;
+    padding: 0.5em 1em;
+  }
+  
+  .card {
+    transition: all 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: translateY(-2px);
+  }
