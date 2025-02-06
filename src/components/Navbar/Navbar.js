@@ -70,6 +70,9 @@ const Navbar = () => {
               <li className="nav-item">
                 <a className="nav-link px-3 active" href="/community">Community</a>
               </li>
+              <li className="nav-item">
+                <a className="nav-link px-3 active" href="/community">Dashboard</a>
+              </li>
             </ul>
 
             <div className="d-flex align-items-center gap-3">

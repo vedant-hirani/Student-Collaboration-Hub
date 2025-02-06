@@ -13,10 +13,10 @@ const Footer = () => {
           <div className="footer-links">
             <h4>Quick Links</h4>
             <ul>
-              <li><a href="#">Home</a></li>
-              <li><a href="#">Events</a></li>
-              <li><a href="#">About Us</a></li>
-              <li><a href="#">Contact</a></li>
+              <li><a href="https://example.com" target="_blank" rel="noopener noreferrer">Home</a></li>
+              <li><a href="https://example.com" target="_blank" rel="noopener noreferrer">Events</a></li>
+              <li><a href="https://example.com" target="_blank" rel="noopener noreferrer">About Us</a></li>
+              <li><a href="https://example.com" target="_blank" rel="noopener noreferrer">Contact</a></li>
             </ul>
           </div>
 
@@ -29,10 +29,10 @@ const Footer = () => {
           <div className="footer-social">
             <h4>Follow Us</h4>
             <div className="social-icons">
-              <a href="#"><i className="fab fa-facebook"></i></a>
-              <a href="#"><i className="fab fa-twitter"></i></a>
-              <a href="#"><i className="fab fa-instagram"></i></a>
-              <a href="#"><i className="fab fa-linkedin"></i></a>
+              <a href="https://example.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-facebook"></i></a>
+              <a href="https://example.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-twitter"></i></a>
+              <a href="https://example.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-instagram"></i></a>
+              <a href="https://example.com" target="_blank" rel="noopener noreferrer"><i className="fab fa-linkedin"></i></a>
             </div>
           </div>
         </div>

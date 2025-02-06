@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Calendar, Clock, MapPin, User, Mail, Phone, Link } from 'lucide-react';
+import React from 'react';
 import './eventpage.css';
 
 export const NotifyEventPage = () => {

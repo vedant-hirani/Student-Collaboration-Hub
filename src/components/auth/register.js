@@ -5,11 +5,11 @@ import './login.css';
 const Register = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    fullName: '',
     email: '',
     password: '',
     confirmPassword: '',
-    agreeToTerms: false
+    agreeToTerms: false,
+    username: '' // Add username field
   });
 
   const [errors, setErrors] = useState({});
@@ -24,8 +24,8 @@ const Register = () => {
 
   const validateForm = () => {
     const newErrors = {};
-    if (!formData.fullName) {
-      newErrors.fullName = 'Full name is required';
+    if (!formData.username) {
+      newErrors.username = 'Username is required'; // Add username validation
     }
     if (!formData.email) {
       newErrors.email = 'Email is required';
@@ -47,13 +47,26 @@ const Register = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      // Here you would typically make an API call to register
-      console.log('Form submitted:', formData);
-      // Simulate successful registration
-      navigate('/login');
+      try {
+        const response = await fetch('http://localhost:5000/api/register', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+        if (response.ok) {
+          console.log('Form submitted:', formData);
+          navigate('/login');
+        } else {
+          console.error('Failed to submit form');
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
+      }
     }
   };
 
@@ -67,17 +80,17 @@ const Register = () => {
 
         <form onSubmit={handleSubmit} className="login-form">
           <div className="form-group">
-            <label htmlFor="fullName">Full Name</label>
+            <label htmlFor="username">Username</label>
             <input
               type="text"
-              id="fullName"
-              name="fullName"
-              value={formData.fullName}
+              id="username"
+              name="username"
+              value={formData.username}
               onChange={handleChange}
-              className={errors.fullName ? 'error' : ''}
-              placeholder="Enter your full name"
+              className={errors.username ? 'error' : ''}
+              placeholder="Enter your username"
             />
-            {errors.fullName && <span className="error-message">{errors.fullName}</span>}
+            {errors.username && <span className="error-message">{errors.username}</span>}
           </div>
 
           <div className="form-group">

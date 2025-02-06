@@ -11,6 +11,8 @@ const Login = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [loading, setLoading] = useState(false); // To show loading state while waiting for the API response
+  const [serverError, setServerError] = useState(''); // To show server errors like invalid credentials
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
@@ -34,13 +36,42 @@ const Login = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      // Here you would typically make an API call to authenticate
-      console.log('Form submitted:', formData);
-      // Simulate successful login
-      navigate('/events');
+      setLoading(true); // Start loading
+      setServerError(''); // Reset any previous server errors
+
+      try {
+        // Make the API call to authenticate user
+        const response = await fetch('http://localhost:5000/api/login', {  // Replace with your actual API URL
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.password,
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok) {
+          // Successful login
+          console.log('User authenticated', data);
+          // Redirect to the dashboard or home page
+          navigate('/events');
+        } else {
+          // Handle invalid credentials or errors
+          setServerError(data.message || 'Authentication failed');
+        }
+      } catch (error) {
+        console.error('Error during authentication:', error);
+        setServerError('There was a problem with the login request. Please try again.');
+      } finally {
+        setLoading(false); // End loading
+      }
     }
   };
 
@@ -81,6 +112,8 @@ const Login = () => {
             {errors.password && <span className="error-message">{errors.password}</span>}
           </div>
 
+          {serverError && <div className="server-error">{serverError}</div>} {/* Display server error */}
+
           <div className="form-footer">
             <div className="remember-me">
               <input
@@ -97,8 +130,8 @@ const Login = () => {
             </Link>
           </div>
 
-          <button type="submit" className="login-button">
-            Sign In
+          <button type="submit" className="login-button" disabled={loading}>
+            {loading ? 'Signing In...' : 'Sign In'}
           </button>
 
           <div className="register-prompt">

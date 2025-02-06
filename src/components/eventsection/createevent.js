@@ -1,8 +1,50 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './eventpage.css';
 
 const CreateEventPage = () => {
   const [activeStep, setActiveStep] = useState(1);
+  const [formData, setFormData] = useState({
+    title: '',
+    category: '',
+    eventType: '',
+    startDate: '',
+    startTime: '',
+    location: '',
+    description: '',
+    image: null
+  });
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: files ? files[0] : value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const data = new FormData();
+    for (const key in formData) {
+      data.append(key, formData[key]);
+    }
+    try {
+      const response = await fetch('http://localhost:5000/api/events', {
+        method: 'POST',
+        body: data,
+      });
+      if (response.ok) {
+        console.log('Event created:', formData);
+        navigate('/'); // Redirect to home screen
+      } else {
+        console.error('Failed to create event');
+      }
+    } catch (error) {
+      console.error('Error creating event:', error);
+    }
+  };
 
   return (
     <div className="page-container">
@@ -15,7 +57,9 @@ const CreateEventPage = () => {
               Back
             </button>
             <h2 className="mb-0">Create New Event</h2>
-            <div style={{width: '80px'}}></div>
+            <button className="btn btn-primary" onClick={() => navigate('/dashboard')}>
+              Dashboard
+            </button>
           </div>
         </div>
       </nav>
@@ -40,15 +84,22 @@ const CreateEventPage = () => {
           {activeStep === 1 && (
             <form>
               <div className="upload-area mb-4">
-                <i className="bi bi-camera upload-icon"></i>
-                <p className="mb-2">Drag and drop an image here, or</p>
-                <button type="button" className="btn btn-primary">Browse Files</button>
+                <input
+                  type="file"
+                  name="image"
+                  accept="image/*"
+                  onChange={handleChange}
+                  className="form-control"
+                />
               </div>
 
               <div className="mb-3">
                 <label className="form-label">Event Title</label>
                 <input 
                   type="text" 
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
                   className="form-control" 
                   placeholder="Give your event a catchy title"
                 />
@@ -57,7 +108,12 @@ const CreateEventPage = () => {
               <div className="row">
                 <div className="col-md-6 mb-3">
                   <label className="form-label">Category</label>
-                  <select className="form-select">
+                  <select 
+                    name="category"
+                    value={formData.category}
+                    onChange={handleChange}
+                    className="form-select"
+                  >
                     <option>Conference</option>
                     <option>Workshop</option>
                     <option>Seminar</option>
@@ -66,7 +122,12 @@ const CreateEventPage = () => {
                 </div>
                 <div className="col-md-6 mb-3">
                   <label className="form-label">Event Type</label>
-                  <select className="form-select">
+                  <select 
+                    name="eventType"
+                    value={formData.eventType}
+                    onChange={handleChange}
+                    className="form-select"
+                  >
                     <option>In-Person</option>
                     <option>Virtual</option>
                     <option>Hybrid</option>
@@ -84,14 +145,26 @@ const CreateEventPage = () => {
                     <i className="bi bi-calendar form-icon"></i>
                     Start Date
                   </label>
-                  <input type="date" className="form-control" />
+                  <input 
+                    type="date" 
+                    name="startDate"
+                    value={formData.startDate}
+                    onChange={handleChange}
+                    className="form-control" 
+                  />
                 </div>
                 <div className="col-md-6 mb-3">
                   <label className="form-label">
                     <i className="bi bi-clock form-icon"></i>
                     Start Time
                   </label>
-                  <input type="time" className="form-control" />
+                  <input 
+                    type="time" 
+                    name="startTime"
+                    value={formData.startTime}
+                    onChange={handleChange}
+                    className="form-control" 
+                  />
                 </div>
               </div>
 
@@ -102,6 +175,9 @@ const CreateEventPage = () => {
                 </label>
                 <input 
                   type="text" 
+                  name="location"
+                  value={formData.location}
+                  onChange={handleChange}
                   className="form-control" 
                   placeholder="Enter venue or virtual meeting link"
                 />
@@ -110,6 +186,9 @@ const CreateEventPage = () => {
               <div className="mb-3">
                 <label className="form-label">Description</label>
                 <textarea 
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
                   className="form-control" 
                   rows="4"
                   placeholder="Describe your event..."
@@ -121,7 +200,23 @@ const CreateEventPage = () => {
           {activeStep === 3 && (
             <div className="preview-container bg-light p-4 rounded">
               <h4 className="mb-4">Event Preview</h4>
-              {/* Add preview content here */}
+              <div className="event-preview">
+                {formData.image && (
+                  <img 
+                    src={URL.createObjectURL(formData.image)} 
+                    alt="Event" 
+                    className="event-image-preview" 
+                    style={{ width: '100%', height: 'auto', maxWidth: '300px', maxHeight: '300px', objectFit: 'cover' }}
+                  />
+                )}
+                <p><strong>Title:</strong> {formData.title}</p>
+                <p><strong>Category:</strong> {formData.category}</p>
+                <p><strong>Event Type:</strong> {formData.eventType}</p>
+                <p><strong>Date:</strong> {new Date(formData.startDate).toLocaleDateString()}</p>
+                <p><strong>Time:</strong> {formData.startTime}</p>
+                <p><strong>Location:</strong> {formData.location}</p>
+                <p><strong>Description:</strong> {formData.description}</p>
+              </div>
             </div>
           )}
 
@@ -135,12 +230,21 @@ const CreateEventPage = () => {
                 Previous
               </button>
             )}
-            <button 
-              className="btn btn-primary ms-auto"
-              onClick={() => activeStep < 3 ? setActiveStep(activeStep + 1) : console.log('Submit')}
-            >
-              {activeStep === 3 ? 'Create Event' : 'Next'}
-            </button>
+            {activeStep < 3 ? (
+              <button 
+                className="btn btn-primary ms-auto"
+                onClick={() => setActiveStep(activeStep + 1)}
+              >
+                Next
+              </button>
+            ) : (
+              <button 
+                className="btn btn-primary ms-auto"
+                onClick={handleSubmit}
+              >
+                Create Event
+              </button>
+            )}
           </div>
         </div>
       </div>
