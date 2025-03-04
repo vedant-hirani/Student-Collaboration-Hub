@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id          String       @id @default(uuid())
+  name        String
+  email       String       @unique
+  password    String
+  createdAt   DateTime     @default(now())
+  events      Event[]      @relation("UserEvents")
+  communities Community[]  @relation("UserCommunities")
+  notifications Notification[]
+
+  Event Event[] @relation("EventParticipants")
+
+  Community Community[] @relation("CommunityMembers")
+
+  Notification Notification[] @relation("TargetUser")
+}
+
+model Event {
+  id          String    @id @default(uuid())
+  title       String
+  category    String    // Added for event category
+  eventType   String    // Added for event type (In-Person, Virtual, Hybrid)
+  description String
+  location    String
+  date        DateTime
+  imageUrl    String?   // Added for event image
+  createdAt   DateTime  @default(now())
+  creatorId   String
+  creator     User      @relation("UserEvents", fields: [creatorId], references: [id])
+  participants User[]   @relation("EventParticipants")
+}
+
+model Community {
+  id            String   @id @default(uuid())
+  name          String
+  description   String
+  createdBy     String   // Reference to User who created the community
+  createdAt     DateTime @default(now())
+  creator       User     @relation("UserCommunities", fields: [createdBy], references: [id])
+  members       User[]   @relation("CommunityMembers")
+
+  Notification Notification[] @relation("TargetCommunity")
+}
+
+model Notification {
+  id              String   @id @default(uuid())
+  content         String
+  userId          String   // Reference to the user who created the notification
+  user            User     @relation(fields: [userId], references: [id])
+  targetUserId    String?  // Optional reference to a target user (if sending notifications to users directly)
+  targetUser      User?    @relation("TargetUser", fields: [targetUserId], references: [id])
+  targetCommunityId String? // Optional reference to a target community (if sending notifications to communities)
+  targetCommunity  Community? @relation("TargetCommunity", fields: [targetCommunityId], references: [id])
+  createdAt       DateTime @default(now())
+}
