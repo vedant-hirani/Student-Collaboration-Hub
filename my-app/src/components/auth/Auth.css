@@ -1,0 +1,137 @@
+/* Auth.css */
+.auth-container {
+    padding: 2rem;
+    max-width: 100%;
+    width: 100%;
+  }
+  
+  .auth-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .auth-header h2 {
+    color: #563d7c;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+  }
+  
+  .auth-header p {
+    color: #6c757d;
+    margin-bottom: 0;
+  }
+  
+  .auth-form {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .form-group {
+    margin-bottom: 1.5rem;
+  }
+  
+  .form-group label {
+    font-weight: 500;
+    color: #495057;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+  
+  .input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+  }
+  
+  .input-group-text {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-right: none;
+    color: #6c757d;
+  }
+  
+  .input-group .form-control {
+    border-left: none;
+  }
+  
+  .input-group .form-control:focus {
+    border-color: #ced4da;
+    box-shadow: none;
+  }
+  
+  .input-group .form-control:focus + .input-group-text {
+    border-color: #ced4da;
+  }
+  
+  .form-check {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+  }
+  
+  .forgot-password {
+    color: #563d7c;
+    text-decoration: none;
+    font-size: 0.875rem;
+  }
+  
+  .forgot-password:hover {
+    text-decoration: underline;
+  }
+  
+  .btn-primary {
+    background-color: #563d7c;
+    border-color: #563d7c;
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #6f42c1;
+    border-color: #6f42c1;
+  }
+  
+  .auth-footer {
+    text-align: center;
+    margin-top: 2rem;
+    color: #6c757d;
+  }
+  
+  .auth-footer p {
+    margin-bottom: 0.5rem;
+  }
+  
+  .auth-footer .btn-link {
+    color: #563d7c;
+    text-decoration: none;
+    font-weight: 500;
+  }
+  
+  .auth-footer .btn-link:hover {
+    text-decoration: underline;
+  }
+  
+  /* Form validation styles */
+  .form-control.is-invalid {
+    border-color: #dc3545;
+    background-image: none;
+  }
+  
+  .invalid-feedback {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+  }
+  
+  /* Animation */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .auth-container {
+    animation: fadeIn 0.3s ease;
+  }

@@ -1,0 +1,59 @@
+.community-container {
+    background-color: #f8f9fa;
+    min-height: calc(100vh - 70px);
+  }
+  
+  .stat-value {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #0d6efd;
+    margin-bottom: 0.5rem;
+  }
+  
+  .stat-label {
+    font-size: 1.1rem;
+    color: #6c757d;
+  }
+  
+  .community-group {
+    background-color: #fff;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+  }
+  
+  .community-group:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+  }
+  
+  .group-avatar img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+  }
+  
+  .discussion-item {
+    background-color: #fff;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+  }
+  
+  .discussion-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+  }
+  
+  .event-item {
+    background-color: #fff;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+  }
+  
+  .event-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+  }
+  
+  .sticky-top {
+    z-index: 1020;
+  }
