@@ -1,0 +1,106 @@
+.event-section {  
+    display: flex;  
+    justify-content: space-between;  
+    align-items: stretch;  
+    padding: 2rem;  
+    background-color: white;  
+    gap: 1rem; /* Adds gap between sections for better spacing */  
+}  
+
+.event-illustration {  
+    flex: 1;  
+    max-width: 400px;  
+    margin-right: 2rem;  
+    display: flex;  
+    align-items: center;  
+}  
+
+.event-illustration img {  
+    width: 100%;  
+    height: 100%;  
+    object-fit: cover;  
+    border-radius: 8px;  
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
+}  
+
+.event-cards {  
+    flex: 2;  
+    display: flex;  
+    flex-direction: column;  
+    gap: 1.5rem;  
+}  
+
+.event-card-s {  
+    background-color: #7b1fa2;  
+    border-radius: 8px;  
+    padding: 1.5rem;  
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);  
+    transition: transform 0.3s ease;  
+    flex: 1;  
+    display: flex;  
+    flex-direction: column;  
+    justify-content: space-between;  
+}  
+
+.event-card-s:hover {  
+    transform: scale(1.03);  
+}  
+
+.event-card-s h2 {  
+    margin-bottom: 0.5rem;  
+    color: #ffffff;  
+}  
+
+.event-card-s p {  
+    margin-bottom: 1rem;  
+    color: #e1bee7;  
+}  
+
+.cta-button {  
+    padding: 0.75rem 1.5rem;  
+    background-color: #4076ff;  
+    color: white;  
+    border: none;  
+    border-radius: 5px;  
+    cursor: pointer;  
+    transition: background-color 0.3s ease;  
+}  
+
+.cta-button:hover {  
+    background-color: #0039f5;  
+}  
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {  
+    .event-section {  
+        flex-direction: column;  
+        align-items: center;  
+        padding: 1rem;  
+    }  
+
+    .event-illustration {  
+        margin-right: 0;  
+        margin-bottom: 1.5rem;  
+        max-width: 100%;  
+    }  
+
+    .event-illustration img {  
+        width: 100%;  
+        height: auto; /* Adjust height to fit dynamically */  
+    }  
+
+    .event-cards {  
+        width: 100%;  
+    }  
+}  
+
+@media (max-width: 480px) {  
+    .event-card-s {  
+        padding: 1rem;  
+    }  
+
+    .cta-button {  
+        padding: 0.5rem 1rem;  
+        font-size: 0.9rem;  
+    }  
+}
