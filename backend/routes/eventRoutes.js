@@ -79,6 +79,17 @@ router.post('/:id/register', verifyToken, async (req, res) => {
   }
 });
 
+router.get('/', async (req, res) => {
+  try {
+    const events = await Event.find().sort({ createdAt: -1 }); // latest first
+    res.status(200).json({ events });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+
 // Get registrations for a specific event (for event creators)
 router.get('/:id/registrations', verifyToken, async (req, res) => {
   try {
