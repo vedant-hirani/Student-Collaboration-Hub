@@ -18,6 +18,8 @@ import DiscoverPage from './components/discover/eventdiscover.js';
 import CommunityPage from './components/community/community.js';
 import { opportunities } from './data/dummy_data';
 import EventsPage from './components/eventpage.js';
+import UserProfile from './components/userprofile/userProfile.jsx';
+
 
 // In App.js, remove the Router component:
 function App() {
@@ -46,7 +48,7 @@ function App() {
                 </>
               }
             />
-             <Route path="/events" element={<EventList />} />
+        <Route path="/events" element={<EventList />} />
         <Route path="/event/:id" element={<EventDetails />} />
         <Route path="*" element={<NotFound />} />
         <Route path="/login" element={<Login />} />
@@ -57,6 +59,7 @@ function App() {
 
         <Route path="/discover" element={<DiscoverPage />} />
         <Route path="/community" element={<CommunityPage />} />
+        <Route path="/profile" element={<UserProfile />}/>
         
           </Routes>
         </Suspense>

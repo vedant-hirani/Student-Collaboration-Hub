@@ -7,7 +7,6 @@ import cors from "cors";
 import connectDB from "./db.js";
 import authRoutes from'./routes/authRoutes.js'
 import eventRoutes from './routes/eventRoutes.js'
-import userRoutes from './routes/userRoutes.js'
 
 
 const app = express();
@@ -32,7 +31,6 @@ app.use('/api/auth', authRoutes);
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 // Routes
 app.use('/api/events', eventRoutes);
-app.use('/api/users', userRoutes);
 
 
 // Ensure the database connection is established before starting the server

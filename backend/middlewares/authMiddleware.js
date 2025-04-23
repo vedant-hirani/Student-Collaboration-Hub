@@ -1,6 +1,5 @@
 import jwt from 'jsonwebtoken';
 
-// In your authMiddleware.js
 const verifyToken = (req, res, next) => {
   try {
     const authHeader = req.headers.authorization;
@@ -16,7 +15,11 @@ const verifyToken = (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     console.log('Decoded token:', decoded);
     
-    req.user = decoded;
+    req.user = {
+      id: decoded.userId,  
+      email: decoded.email
+    };
+    
     next();
   } catch (error) {
     console.error('Token verification error:', error);

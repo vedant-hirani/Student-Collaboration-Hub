@@ -24,7 +24,6 @@ router.post('/', verifyToken, upload.single('image'), async (req, res) => {
   try {
     const { title, category, eventType, startDate, startTime, location, description } = req.body;
     const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
-    
 
     const newEvent = new Event({
       title,
@@ -46,61 +45,43 @@ router.post('/', verifyToken, upload.single('image'), async (req, res) => {
   }
 });
 
-// Add this to your eventRoutes.js
-// Register for an event
-router.post('/:id/register', verifyToken, async (req, res) => {
+
+// Get events created by user
+router.get('/user/created', verifyToken, async (req, res) => {
   try {
-    const eventId = req.params.id;
     const userId = req.user.id;
+
+    // Find all events created by this user
+    const events = await Event.find({ createdBy: userId }).sort({ createdAt: -1 });
     
-    const event = await Event.findById(eventId);
-    
-    if (!event) {
-      return res.status(404).json({ message: 'Event not found' });
-    }
-    
-    // Check if user is already registered
-    const alreadyRegistered = event.registrations.some(
-      registration => registration.userId.toString() === userId
-    );
-    
-    if (alreadyRegistered) {
-      return res.status(400).json({ message: 'Already registered for this event' });
-    }
-    
-    // Add user to registrations
-    event.registrations.push({ userId });
-    await event.save();
-    
-    res.status(200).json({ message: 'Successfully registered for event', event });
+    res.status(200).json({ events });
   } catch (err) {
-    console.error(err);
+    console.error('Error fetching user events:', err);
     res.status(500).json({ message: 'Server error' });
   }
 });
 
-// Get registrations for a specific event (for event creators)
-router.get('/:id/registrations', verifyToken, async (req, res) => {
+// Get events the user has registered for
+router.get('/user/registered', verifyToken, async (req, res) => {
   try {
-    const event = await Event.findById(req.params.id);
+    const userId = req.user.id;
+
+    // Find all events where this user is registered
+    const events = await Event.find({ 
+      'registrations.userId': userId 
+    }).sort({ startDate: 1 });
     
-    if (!event) {
-      return res.status(404).json({ message: 'Event not found' });
-    }
-    
-    // Check if user is the creator of the event
-    if (event.createdBy.toString() !== req.user.id) {
-      return res.status(403).json({ message: 'Unauthorized' });
-    }
-    
-    // Populate user data for registrations
-    const populatedEvent = await Event.findById(req.params.id)
-      .populate({
-        path: 'registrations.userId',
-        select: 'name email' // Only get non-sensitive user data
-      });
-    
-    res.status(200).json({ registrations: populatedEvent.registrations });
+    res.status(200).json({ events });
+  } catch (err) {
+    console.error('Error fetching registered events:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+router.get('/', async (req, res) => {
+  try {
+    const events = await Event.find().sort({ createdAt: -1 }); // latest first
+    res.status(200).json({ events });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: 'Server error' });

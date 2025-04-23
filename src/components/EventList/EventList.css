@@ -1,44 +1,43 @@
 .event-list {
-    padding: 2rem;
-  }
-  
-  .events {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
-    gap: 1rem; /* Gap between cards */
-    max-width: 1200px; /* Set max width to 1200px */
-    margin: 0 auto; /* Center align container */
-  }
-  
-  .event-card {
-    border: 1px solid #ccc;
-    padding: 1rem;
-    border-radius: 5px;
-    background: white;
-    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add hover effects */
-  }
-  
-  .event-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  }
-  
-  .event-image {
-    width: 100%; /* Make images responsive */
-    border-radius: 5px; /* Rounded corners for the image */
-    margin-bottom: 0.5rem; /* Space between image and title */
-    object-fit: cover; /* Ensure the image fits nicely */
-    aspect-ratio: 4/3; /* Maintain consistent image ratio */
-  }
-  
-  h3 {
-    margin: 0.5rem 0; /* Margin around title */
-    font-size: 1.2em; /* Title size */
-    color: #1f2937; /* Darker color for the title */
-  }
-  
-  p {
-    margin: 0.2rem 0; /* Margin for paragraphs */
-    color: #555; /* Slightly darker color for text */
-  }
-  
+  padding: 2rem;
+}
+
+.events {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
+  gap: 1rem; /* Gap between cards */
+  max-width: 1200px; /* Set max width to 1200px */
+  margin: 0 auto; /* Center align container */
+}
+
+.event-card {
+  border: 1px solid #ccc;
+  padding: 1rem;
+  border-radius: 5px;
+  background: white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add hover effects */
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.event-image {
+  width: 100%; /* Make images responsive */
+  border-radius: 5px; /* Rounded corners for the image */
+  margin-bottom: 0.5rem; /* Space between image and title */
+  object-fit: cover; /* Ensure the image fits nicely */
+  aspect-ratio: 4/3; /* Maintain consistent image ratio */
+}
+
+h3 {
+  margin: 0.5rem 0; /* Margin around title */
+  font-size: 1.2em; /* Title size */
+  color: #1f2937; /* Darker color for the title */
+}
+
+p {
+  margin: 0.2rem 0; /* Margin for paragraphs */
+  color: #555; /* Slightly darker color for text */
+}
