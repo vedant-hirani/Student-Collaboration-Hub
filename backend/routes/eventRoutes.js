@@ -45,7 +45,65 @@ router.post('/', verifyToken, upload.single('image'), async (req, res) => {
   }
 });
 
-
+// Updated registration route to fix validation error
+router.post('/:eventId/register', verifyToken, async (req, res) => {
+  try {
+    const eventId = req.params.eventId;
+    const userId = req.user.id;
+    const { name, email, phone, additionalInfo } = req.body;
+    
+    // Check if event exists
+    const event = await Event.findById(eventId);
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+    
+    // Check if user is already registered
+    const alreadyRegistered = event.registrations.some(
+      registration => registration.userId && registration.userId.toString() === userId.toString()
+    );
+    
+    if (alreadyRegistered) {
+      return res.status(400).json({ message: 'You are already registered for this event' });
+    }
+    
+    // Instead of creating a new Event document, we'll update the existing one
+    // This avoids issues with required fields like createdBy
+    const result = await Event.findByIdAndUpdate(
+      eventId,
+      {
+        $push: {
+          registrations: {
+            userId,
+            userData: {
+              name,
+              email,
+              phone,
+              additionalInfo
+            },
+            registeredAt: new Date()
+          }
+        }
+      },
+      { new: true, runValidators: false } // Return updated document and skip validation
+    );
+    
+    if (!result) {
+      return res.status(500).json({ message: 'Failed to update event registration' });
+    }
+    
+    // Get the newly added registration from the result
+    const newRegistration = result.registrations[result.registrations.length - 1];
+    
+    res.status(200).json({ 
+      message: 'Registration successful',
+      registration: newRegistration
+    });
+  } catch (err) {
+    console.error('Error registering for event:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 // Get events created by user
 router.get('/user/created', verifyToken, async (req, res) => {
   try {

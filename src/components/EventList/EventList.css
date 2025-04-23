@@ -1,43 +1,276 @@
+/* EventList.css with inline Bootstrap utility classes */
 .event-list {
-  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.events {
+.section-title {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+  font-weight: 600;
+  font-size: 1.75rem;
+}
+
+/* Grid container that ensures 3 boxes per row */
+.events-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive grid */
-  gap: 1rem; /* Gap between cards */
-  max-width: 1200px; /* Set max width to 1200px */
-  margin: 0 auto; /* Center align container */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+/* Media query for responsive design */
+@media (max-width: 992px) {
+  .events-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .events-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 .event-card {
-  border: 1px solid #ccc;
-  padding: 1rem;
-  border-radius: 5px;
-  background: white;
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Add hover effects */
+  border: 1px solid #dee2e6;
+  border-radius: 0.25rem;
+  overflow: hidden;
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  transition: transform 0.2s, box-shadow 0.2s;
+  background-color: #fff;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 .event-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transform: translateY(-0.25rem);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.event-card h3 {
+  padding: 1rem;
+  margin: 0;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.image-container {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
 }
 
 .event-image {
-  width: 100%; /* Make images responsive */
-  border-radius: 5px; /* Rounded corners for the image */
-  margin-bottom: 0.5rem; /* Space between image and title */
-  object-fit: cover; /* Ensure the image fits nicely */
-  aspect-ratio: 4/3; /* Maintain consistent image ratio */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
 }
 
-h3 {
-  margin: 0.5rem 0; /* Margin around title */
-  font-size: 1.2em; /* Title size */
-  color: #1f2937; /* Darker color for the title */
+.event-card:hover .event-image {
+  transform: scale(1.05);
 }
 
-p {
-  margin: 0.2rem 0; /* Margin for paragraphs */
-  color: #555; /* Slightly darker color for text */
+.event-details {
+  padding: 1.25rem;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.event-description {
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.5;
+  flex-grow: 1;
+}
+
+.event-date-time, .event-location {
+  margin: 0.5rem 0;
+  font-size: 0.875rem;
+  color: #6c757d;
+}
+
+/* Ensuring the register button is blue and rectangular */
+.register-button {
+  background-color: #0056b3;
+  color: white;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-top: 1rem;
+  transition: background-color 0.2s, transform 0.1s;
+  text-align: center;
+  letter-spacing: 0.01rem;
+  width: 100%;
+  display: block;
+}
+
+.register-button:hover {
+  background-color: #0069d9;
+}
+
+.register-button:active {
+  transform: translateY(1px);
+}
+
+/* Modal styles */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050;
+}
+
+.modal-container {
+  background-color: white;
+  border-radius: 0.3rem;
+  width: 90%;
+  max-width: 550px;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.modal-header h3 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #212529;
+}
+
+.close-button {
+  background: transparent;
+  border: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1;
+  color: #000;
+  opacity: 0.5;
+  padding: 0;
+  cursor: pointer;
+}
+
+.close-button:hover {
+  opacity: 0.75;
+}
+
+.modal-body {
+  padding: 1.5rem;
+}
+
+.message {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+}
+
+.message.success {
+  color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.message.error {
+  color: #721c24;
+  background-color: #f8d7da;
+  border-color: #f5c6cb;
+}
+
+.registration-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.registration-form label {
+  display: inline-block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.registration-form input, 
+.registration-form textarea {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.registration-form input:focus, 
+.registration-form textarea:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.registration-form textarea {
+  resize: vertical;
+}
+
+.submit-button {
+  display: block;
+  width: 100%;
+  color: #fff;
+  background-color: #0056b3;
+  font-weight: 400;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  user-select: none;
+  border: 1px solid transparent;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  cursor: pointer;
+  margin-top: 1rem;
+}
+
+.submit-button:hover {
+  background-color: #0069d9;
+  border-color: #0062cc;
+}
+
+.submit-button:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.submit-button:disabled {
+  opacity: 0.65;
+  background-color: #6c757d;
+  border-color: #6c757d;
+  cursor: not-allowed;
 }

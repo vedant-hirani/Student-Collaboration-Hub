@@ -1,8 +1,7 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import User from '../models/User.js';
-
+import User from '../models/User.js'; // Adjust the path as necessary
 const router = express.Router();
 
 // Generate JWT token

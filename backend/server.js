@@ -29,9 +29,7 @@ app.get("/", (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
-// Routes
 app.use('/api/events', eventRoutes);
-
 
 // Ensure the database connection is established before starting the server
 connectDB().then(() => {
