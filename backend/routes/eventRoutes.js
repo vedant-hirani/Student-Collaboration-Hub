@@ -5,6 +5,7 @@ import Event from '../models/Event.js';
 import verifyToken from '../middlewares/authMiddleware.js';
 
 const router = express.Router();
+
 // Image upload config
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -45,30 +46,54 @@ router.post('/', verifyToken, upload.single('image'), async (req, res) => {
   }
 });
 
-// Updated registration route to fix validation error
-router.post('/:eventId/register', verifyToken, async (req, res) => {
+// Fetch event details and registered participants
+router.get('/:eventId', verifyToken, async (req, res) => {
   try {
-    const eventId = req.params.eventId;
-    const userId = req.user.id;
-    const { name, email, phone, additionalInfo } = req.body;
-    
-    // Check if event exists
-    const event = await Event.findById(eventId);
+    const { eventId } = req.params;
+
+    // Find the event and populate the registrations field
+    const event = await Event.findById(eventId).populate({
+      path: 'registrations.userId',
+      select: 'name email', // Adjust fields as needed
+    });
+
     if (!event) {
       return res.status(404).json({ message: 'Event not found' });
     }
-    
+
+    res.status(200).json({
+      participants: event.registrations.map((reg) => reg.userId), // Extract user details
+    });
+  } catch (err) {
+    console.error('Error fetching participants:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Register for an event
+router.post('/:eventId/register', verifyToken, async (req, res) => {
+  try {
+    const { eventId } = req.params;
+    const { name, email, phone, additionalInfo } = req.body;
+    const userId = req.user.id;
+
+    // Find the event by ID
+    const event = await Event.findById(eventId);
+
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+
     // Check if user is already registered
     const alreadyRegistered = event.registrations.some(
       registration => registration.userId && registration.userId.toString() === userId.toString()
     );
-    
+
     if (alreadyRegistered) {
       return res.status(400).json({ message: 'You are already registered for this event' });
     }
-    
-    // Instead of creating a new Event document, we'll update the existing one
-    // This avoids issues with required fields like createdBy
+
+    // Update the event with the new registration
     const result = await Event.findByIdAndUpdate(
       eventId,
       {
@@ -87,14 +112,14 @@ router.post('/:eventId/register', verifyToken, async (req, res) => {
       },
       { new: true, runValidators: false } // Return updated document and skip validation
     );
-    
+
     if (!result) {
       return res.status(500).json({ message: 'Failed to update event registration' });
     }
-    
+
     // Get the newly added registration from the result
     const newRegistration = result.registrations[result.registrations.length - 1];
-    
+
     res.status(200).json({ 
       message: 'Registration successful',
       registration: newRegistration
@@ -104,6 +129,7 @@ router.post('/:eventId/register', verifyToken, async (req, res) => {
     res.status(500).json({ message: 'Server error' });
   }
 });
+
 // Get events created by user
 router.get('/user/created', verifyToken, async (req, res) => {
   try {
@@ -136,6 +162,7 @@ router.get('/user/registered', verifyToken, async (req, res) => {
   }
 });
 
+// Fetch all events
 router.get('/', async (req, res) => {
   try {
     const events = await Event.find().sort({ createdAt: -1 }); // latest first
@@ -146,5 +173,7 @@ router.get('/', async (req, res) => {
   }
 });
 
-// At the end of your event routes file
 export default router;
+export { router as eventRoutes };
+
+
