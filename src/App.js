@@ -19,6 +19,7 @@ import CommunityPage from './components/community/community.js';
 import { opportunities } from './data/dummy_data';
 import EventsPage from './components/eventpage.js';
 import UserProfile from './components/userprofile/userProfile.jsx';
+import EventAttendees from './components/userprofile/eventAtendes.jsx';
 
 
 // In App.js, remove the Router component:
@@ -40,7 +41,7 @@ function App() {
               element={
                 <>
                   <HeroSection onSearch={handleSearch} />
-                  <EventsPage events={filteredEvents} />
+                 
                   <EventList />
                   <Eventsection />
                   <TrendingEvents />
@@ -60,6 +61,8 @@ function App() {
         <Route path="/discover" element={<DiscoverPage />} />
         <Route path="/community" element={<CommunityPage />} />
         <Route path="/profile" element={<UserProfile />}/>
+        <Route path="/events/attendees" element={<EventAttendees />} />
+        <Route path="/events/attendees/:eventId?" element={<EventAttendees />} />
         
           </Routes>
         </Suspense>

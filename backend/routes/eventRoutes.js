@@ -45,12 +45,14 @@ router.post('/', verifyToken, upload.single('image'), async (req, res) => {
   }
 });
 
-// Updated registration route to fix validation error
+/// Fixed registration route to properly handle user data
 router.post('/:eventId/register', verifyToken, async (req, res) => {
   try {
     const eventId = req.params.eventId;
     const userId = req.user.id;
     const { name, email, phone, additionalInfo } = req.body;
+    
+    console.log('Registration data received:', { name, email, phone, additionalInfo });
     
     // Check if event exists
     const event = await Event.findById(eventId);
@@ -67,8 +69,7 @@ router.post('/:eventId/register', verifyToken, async (req, res) => {
       return res.status(400).json({ message: 'You are already registered for this event' });
     }
     
-    // Instead of creating a new Event document, we'll update the existing one
-    // This avoids issues with required fields like createdBy
+    // Update event with new registration including all user data
     const result = await Event.findByIdAndUpdate(
       eventId,
       {
@@ -85,7 +86,7 @@ router.post('/:eventId/register', verifyToken, async (req, res) => {
           }
         }
       },
-      { new: true, runValidators: false } // Return updated document and skip validation
+      { new: true, runValidators: true } // Return updated document and run validation
     );
     
     if (!result) {
@@ -101,6 +102,9 @@ router.post('/:eventId/register', verifyToken, async (req, res) => {
     });
   } catch (err) {
     console.error('Error registering for event:', err);
+    if (err.name === 'ValidationError') {
+      return res.status(400).json({ message: 'Validation error: ' + err.message });
+    }
     res.status(500).json({ message: 'Server error' });
   }
 });
@@ -146,5 +150,50 @@ router.get('/', async (req, res) => {
   }
 });
 
+
+// Modify the /:eventId/attendees route in the backend
+router.get('/:eventId/attendees', verifyToken, async (req, res) => {
+  try {
+    const eventId = req.params.eventId;
+    const userId = req.user.id;
+
+    // Find the event
+    const event = await Event.findById(eventId);
+    
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+
+    // Check if the user is the creator of the event
+    if (event.createdBy.toString() !== userId) {
+      return res.status(403).json({ message: 'Unauthorized: You can only view attendees for events you created' });
+    }
+
+    // Format attendees data based on the frontend expectations
+    const attendees = event.registrations.map(registration => {
+      return {
+        name: registration.userData?.name || 'Anonymous',
+        email: registration.userData?.email || 'Not provided',
+        phone: registration.userData?.phone || null,
+        registeredAt: registration.registeredAt
+      };
+    });
+
+    res.status(200).json({ 
+      event: {
+        _id: event._id,
+        title: event.title,
+        startDate: event.startDate,
+        capacity: event.capacity,
+        location: event.location,
+        startTime: event.startTime
+      },
+      attendees 
+    });
+  } catch (err) {
+    console.error('Error fetching event attendees:', err);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
 // At the end of your event routes file
 export default router;

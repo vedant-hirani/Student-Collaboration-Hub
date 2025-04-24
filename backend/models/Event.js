@@ -17,14 +17,14 @@ const eventSchema = new mongoose.Schema({
   },
   // Add this field to track registrations
   registrations: [{
-    userId: { 
-      type: mongoose.Schema.Types.ObjectId, 
-      ref: 'User' 
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+    userData: {
+      name: { type: String, required: true },
+      email: { type: String, required: true },
+      phone: { type: String, required: true },
+      additionalInfo: { type: String }
     },
-    registeredAt: { 
-      type: Date, 
-      default: Date.now 
-    }
+    registeredAt: { type: Date, default: Date.now }
   }]
 }, { timestamps: true });
 
