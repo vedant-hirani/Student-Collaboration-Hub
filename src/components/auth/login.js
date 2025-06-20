@@ -46,7 +46,7 @@ const Login = () => {
       setServerError('');
 
       try {
-        const response = await fetch('http://localhost:5000/api/auth/api/login', {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/auth/api/login`, { // Use env variable
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -60,10 +60,8 @@ const Login = () => {
         const data = await response.json();
 
         if (response.ok) {
-          // Use the login function from context instead of directly setting localStorage
           login(data.token, data.user);
           console.log('User authenticated', data);
-          // Redirect to the home page instead of events
           navigate('/');
         } else {
           setServerError(data.message || 'Authentication failed');

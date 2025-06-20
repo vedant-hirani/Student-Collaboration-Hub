@@ -15,7 +15,7 @@ const PORT = process.env.PORT || 5000;
 
 // Configure CORS to allow requests from your frontend
 const corsOptions = {
-  origin: 'http://localhost:3000', // Update this to match your frontend URL
+  origin: 'FRONTEND_URL', // Update this to match your frontend URL
   optionsSuccessStatus: 200,
 };
 

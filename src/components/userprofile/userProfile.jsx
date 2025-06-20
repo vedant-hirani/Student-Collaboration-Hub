@@ -78,9 +78,7 @@ const UserProfile = () => {
       <div className="container">
         {/* User Info Card */}
         <div className="card border-0 rounded-4 shadow-sm mb-4 overflow-hidden">
-          <div className="card-header bg-primary px-3 py-2 border-0">
-            <h3 className="h4 text-white m-0">Profile Information</h3>
-          </div>
+
           <div className="card-body p-4">
             <div className="row align-items-center">
 
@@ -207,15 +205,12 @@ const UserProfile = () => {
                               <span className="text-truncate">{event.location}</span>
                             </div>
                           </div>
+
                           <div className="card-footer bg-white border-0 p-3 pt-0">
-                            <Link
-                              to={`/participant/${event._id}`}  // ← Add event ID to the route
-                              className="btn btn-sm btn-primary w-100"
-                            >
-                              View Details
+                            <Link to={`/events/attendees/${event._id}`} className="btn btn-outline-primary me-2">
+                              View Attendees
                             </Link>
                           </div>
-
                         </div>
                       </div>
                     ))}
